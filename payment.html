@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .payment-container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pay-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .back-btn {
+            background: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Payment Details</h1>
+    <div class="payment-container">
+        <h3>Select Payment Method</h3>
+        
+        <select id="payment-method">
+            <option>Credit Card</option>
+            <option>Debit Card</option>
+            <option>UPI</option>
+            <option>Net Banking</option>
+            <option>Cash on Delivery (COD)</option>
+</select>
+        <div id="payment-details" style="display: none;">
+            <input type="text" id="card-name" placeholder="Cardholder Name" style="display: none;">
+            <input type="text" id="card-number" placeholder="Card Number" style="display: none;">
+            <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YY)" style="display: none;">
+            <input type="text" id="cvv" placeholder="CVV" style="display: none;">
+            <input type="text" id="upi-id" placeholder="UPI ID" style="display: none;">
+        <input type="text" id="net-banking" placeholder="Select Bank" style="display: none;">
+        </div>
+        <button class="pay-btn" onclick="proceedPayment()">Proceed to Pay</button>
+        <button class="back-btn" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        document.getElementById('payment-method').addEventListener('change', function() {
+            const selectedMethod = this.value;
+            document.getElementById('payment-details').style.display = 'block';
+            
+            document.getElementById('card-name').style.display = selectedMethod.includes('Card') ? 'block' : 'none';
+            document.getElementById('card-number').style.display = selectedMethod.includes('Card') ? 'block' : 'none';
+            document.getElementById('expiry-date').style.display = selectedMethod.includes('Card') ? 'block' : 'none';
+            document.getElementById('cvv').style.display = selectedMethod.includes('Card') ? 'block' : 'none';
+            document.getElementById('upi-id').style.display = selectedMethod === 'UPI' ? 'block' : 'none';
+            document.getElementById('net-banking').style.display = selectedMethod === 'Net Banking' ? 'block' : 'none';
+        });
+        function proceedPayment() {
+    const paymentMethod = document.getElementById('payment-method').value;
+    if (paymentMethod === 'Cash on Delivery (COD)') {
+        alert('Order placed successfully! You can pay upon delivery.');
+    } else {
+        alert('Payment Successful! Your order is confirmed.');
+    }
+    window.location.href = 'order.html'; // Redirect to success page
+}
+        function goBack() {
+            window.history.back(); // Go back to previous page
+        }
+    </script>
+</body>
+</html>

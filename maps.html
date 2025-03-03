@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #map {
+            height: 500px;
+            width: 80%;
+            margin: auto;
+            border-radius: 10px;
+        }
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <h1>Track Your Order</h1>
+    <div id="map"></div>
+    <button class="back-btn" onclick="goBack()">Back to Home</button>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        function initMap() {
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser");
+                return;
+            }
+            
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const userLocation = [position.coords.latitude, position.coords.longitude];
+                    const map = L.map('map').setView(userLocation, 15);
+                    
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+                    
+                    L.marker(userLocation).addTo(map)
+                        .bindPopup('Your Location')
+                        .openPopup();
+                },
+                function() {
+                    alert("Unable to retrieve your location");
+                }
+            );
+        }
+        
+        function goBack() {
+            window.history.back(); // Go to the previous page
+            window.location.href = 'main.html'; // Redirect to home page
+        }
+        
+        initMap();
+    </script>
+    <button class="confirm-btn" onclick="confirmAddress()">Confirm Address</button>
+    <script>
+        function confirmAddress() {
+    alert("Address confirmed! Proceed to payment.");
+    window.location.href = 'payment.html';
+}
+    </script>
+</body>
+</html>
